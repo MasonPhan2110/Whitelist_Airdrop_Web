@@ -34,7 +34,7 @@ const UpgradeTier = () => {
           </div>
         )}
           <div className="flex">
-          <input  value={tokenId==0?"":tokenId} onChange={(e) => {
+          <input  value={tokenId===0?"":tokenId} onChange={(e) => {
             const value = e.target.value 
             console.log(value)
             setTokenId(value)

@@ -16,7 +16,7 @@ const UpgradeTier = () => {
   const onUpgradeClick = async () => {
     await upgrade(tokenId, tier, account, library)
     setTokenId("")
-    setTier("")
+    setTier(-1)
   }
 
   return (
@@ -40,7 +40,7 @@ const UpgradeTier = () => {
             setTokenId(value)
             }
             } placeholder= "TokenId" className="mr-5 mt-4 w-full rounded-[10px] bg-[#3D3D3D]/[0.8] py-2 text-white lg:py-3" style={{padding:5}}></input>
-            <input  value={tier==-1?"":tier} onChange={(e) => {
+            <input  value={tier===-1?"":tier} onChange={(e) => {
             const value = e.target.value 
             console.log(value)
             setTier(value)
@@ -48,7 +48,7 @@ const UpgradeTier = () => {
             } placeholder= "Tier" className="mr-5 mt-4 w-full rounded-[10px] bg-[#3D3D3D]/[0.8] py-2 text-white lg:py-3" style={{padding:5}}></input>
             <button
               onClick={onUpgradeClick}
-              disabled={!account||tokenId==0||tier==-1}
+              disabled={!account||tokenId===0||tier===-1}
               className="mr-5 mt-4 w-full rounded-[10px] bg-[#3D3D3D]/[0.8] py-2 font-Inter font-bold text-white lg:py-3"
             >
               Upgrade Now

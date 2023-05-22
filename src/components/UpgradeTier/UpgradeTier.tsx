@@ -35,13 +35,12 @@ const UpgradeTier = () => {
         )}
           <div className="flex">
           <input  value={tokenId===0?"":tokenId} onChange={(e) => {
-            let value = e.target.value 
-            setTokenId(value)
+            setTokenId(e.target.value )
             }
             } placeholder= "TokenId" className="mr-5 mt-4 w-full rounded-[10px] bg-[#3D3D3D]/[0.8] py-2 text-white lg:py-3" style={{padding:5}}></input>
             <input  value={tier===-1?"":tier} onChange={(e) => {
-            let value = e.target.value 
-            setTier(value)
+
+            setTier(e.target.value )
             }
             } placeholder= "Tier" className="mr-5 mt-4 w-full rounded-[10px] bg-[#3D3D3D]/[0.8] py-2 text-white lg:py-3" style={{padding:5}}></input>
             <button

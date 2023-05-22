@@ -11,9 +11,7 @@ const ClaimAirdrop = () => {
   const { disconnectWallet } = useMetamask();
   const [tokenId, setTokenId] = useState<any>(0)
   const onClaimClick = async () => {
-    let result
     await claim(tokenId, account, library)
-    console.log("New swap transaction succeeded: ", result);
     setTokenId("");
   }
   return (
@@ -33,8 +31,7 @@ const ClaimAirdrop = () => {
        
           <div className="flex">
           <input  value={tokenId===0?"":tokenId} onChange={(e) => {
-          const value = e.target.value 
-          console.log(value)
+          var value = e.target.value 
           setTokenId(value)
         }
           } placeholder= "TokenId" style={{padding:5}} className="mr-5 mt-4 w-full rounded-[10px] bg-[#3D3D3D]/[0.8] py-2  text-white lg:py-3"></input>

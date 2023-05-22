@@ -1,5 +1,5 @@
 import { useWeb3React } from '@web3-react/core';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import useMetamask from '@/hooks/useMetamask';
 import { stripVal } from '@/utils/supportFunctions';
@@ -11,7 +11,6 @@ const ClaimAirdrop = () => {
   const { disconnectWallet } = useMetamask();
   const [tokenId, setTokenId] = useState<any>(0)
   const onClaimClick = async () => {
-    let value;
     let result
     await claim(tokenId, account, library)
     console.log("New swap transaction succeeded: ", result);

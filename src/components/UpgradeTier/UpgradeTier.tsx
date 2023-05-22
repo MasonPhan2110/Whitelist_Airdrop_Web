@@ -1,14 +1,10 @@
 import { useWeb3React } from '@web3-react/core';
-import { useContext, useEffect, useState } from 'react';
+import {  useState } from 'react';
 
 import useMetamask from '@/hooks/useMetamask';
-import { PRICE } from '@/hooks/useMint';
-import api from '@/services/api';
+
 import { stripVal } from '@/utils/supportFunctions';
 import { upgrade } from "./upgrade";
-
-import ConnectWalletButton from '../ConnectWalletButton';
-import ModalMint from '../ModalMint/ModalMint';
 
 const UpgradeTier = () => {
   const { account, library } = useWeb3React();
@@ -18,9 +14,9 @@ const UpgradeTier = () => {
 
 
   const onUpgradeClick = async () => {
-    let value;
-    let result
     await upgrade(tokenId, tier, account, library)
+    setTokenId("")
+    setTier("")
   }
 
   return (

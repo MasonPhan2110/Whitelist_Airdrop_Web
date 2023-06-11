@@ -15,15 +15,6 @@ const ClaimAirdrop = () => {
   const { disconnectWallet } = useMetamask();
   const checkClaimContext = useContext(CheckClaimContext);
   const claimContext = useContext(ClaimContext);
-  // const onClaimClick = async () => {
-  //   try{
-  //     await claim(tokenId, account, library)
-  //   } catch(error) {
-  //     console.log(error);
-  //   }
-    
-  //   setTokenId("");
-  // }
   return (
     <>
       <div className="mt-28 w-full lg:mt-20">

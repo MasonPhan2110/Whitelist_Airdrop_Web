@@ -4,9 +4,12 @@ import { useCallback } from 'react';
 import { connectorStorage } from '@/constants/common';
 import type { ConnectorNames } from '@/services/web3React';
 import { connectorsByName, setupNetwork } from '@/services/web3React';
+import { useDispatch } from 'react-redux';
+import { setType } from '@/redux/slices/checkClaimSlice';
 
 const useMetamask = () => {
   const { activate, deactivate } = useWeb3React();
+  const dispatch = useDispatch();
   const connectWallet = useCallback(
     (connectorName: ConnectorNames) => {
       const connector = connectorsByName[connectorName];
@@ -32,6 +35,7 @@ const useMetamask = () => {
   );
 
   const disconnectWallet = useCallback(() => {
+    dispatch(setType('other'));
     deactivate();
 
     window.localStorage.removeItem(connectorStorage);

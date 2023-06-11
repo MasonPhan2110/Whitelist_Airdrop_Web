@@ -4,7 +4,8 @@ import { useState, createContext } from 'react';
 import { db } from '@/firebase/clientApp';
 import { doc, getDoc } from "firebase/firestore";
 import { calCulateReward } from '@/utils/calculateReward';
-import { ethers } from 'ethers';
+import { useDispatch } from 'react-redux';
+import { setType } from '../../redux/slices/checkClaimSlice'
 
 type Props = {
   children: ReactNode;
@@ -42,6 +43,7 @@ export const CheckClaimContext = createContext<IClaimContext>({
 });
 
 export const CheckClaimContextProvider = ({ children }: Props) => {
+  const dispatch = useDispatch();
   const [stateCheckClaim, setStateCheckClaim] = useState<IStateClaim>({
     isOpenModal: false,
     modalType: ClaimModalType.LOADING,
@@ -64,13 +66,10 @@ export const CheckClaimContextProvider = ({ children }: Props) => {
       const docSnap = await getDoc(docRef);
       
       if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-        console.log(typeof docSnap.data());
         const data = docSnap.data()
         const {type} = data;
-        console.log(typeof data.lastClaim.seconds);
+        dispatch(setType(type));
         const reward = calCulateReward(type,data.lastClaim.seconds);
-        console.log("Reward", ethers.utils.formatEther(reward.toString()));
         setStateCheckClaim((prev) => ({
           ...prev,
           amount: reward.toString()
@@ -106,7 +105,6 @@ export const CheckClaimContextProvider = ({ children }: Props) => {
           modalType: ClaimModalType.OTHER,
           imageURL: "/assets/images/wrong.png",
         }));
-        console.log("No such document!");
       }
       
     } catch(error) {
@@ -117,9 +115,7 @@ export const CheckClaimContextProvider = ({ children }: Props) => {
         imageURL: '',
       }));
       console.log(error);
-      
     }
-    
   };
 
   return (

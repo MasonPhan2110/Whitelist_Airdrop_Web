@@ -5,7 +5,9 @@ import { useWeb3React } from '@web3-react/core';
 import { ClaimContext } from '@/hooks/Context/ClaimContext';
 import { createDataClaim } from '@/firebase/UpdateDB';
 import { ethers } from 'ethers';
+import { useSelector } from 'react-redux';
 import ReactPortal from '../Portal/Portal';
+import { selectType } from '../../redux/store'
 
 
 type Props = {
@@ -14,6 +16,7 @@ type Props = {
 };
 
 const ModalClaim = ({ open, onClose }: Props) => {
+  const type = useSelector(selectType)
   const { stateCheckClaim, setStateCheckClaim } = useContext(CheckClaimContext);
   const { account } = useWeb3React();
   const { modalType } = stateCheckClaim;
@@ -26,7 +29,7 @@ const ModalClaim = ({ open, onClose }: Props) => {
   const handleChildClick = (event: any) => {
     event.stopPropagation();
   };
-  const handlClaimClick = async (type: number) => {
+  const handlClaimClick = async () => {
     setStateCheckClaim((prev) => ({
       ...prev,
       isOpenModal: false,
@@ -37,7 +40,7 @@ const ModalClaim = ({ open, onClose }: Props) => {
     const amountNumber = Number(ethers.utils.formatEther(stateCheckClaim.amount))
     const id = await createDataClaim(account!,amountNumber)
     
-    claimContext?.handleClaim(type, id,stateCheckClaim.amount);
+    claimContext?.handleClaim(type === 'seed' ? 0 : 1, id,stateCheckClaim.amount);
   }
 
   const render = () => {
@@ -68,11 +71,11 @@ const ModalClaim = ({ open, onClose }: Props) => {
               You will be able to claim 1000 MIRL Tokens per Month
             </p>
             <p className="mt-8 text-white lg:text-xl">
-                Reward: {ethers.utils.formatEther(stateCheckClaim.amount)} MIRL
-              </p>
+              Reward: {ethers.utils.formatEther(stateCheckClaim.amount)} MIRL
+            </p>
             <button className="mt-8 rounded-[10px] bg-[#13aa52] px-4 py-2 font-bold text-white"
               disabled = {stateCheckClaim.amount === "0"}
-              onClick = {()=>handlClaimClick(0)} >
+              onClick = {handlClaimClick} >
               Claim Airdrop
             </button>
           </div>
@@ -97,10 +100,12 @@ const ModalClaim = ({ open, onClose }: Props) => {
               <p className="text-white lg:text-xl">
                 You will be able to claim 2000 MIRL Tokens per Month
               </p>
-              <p className="text-white lg:text-xl">
-                Reward: {stateCheckClaim.amount}
+              <p className="mt-8 text-white lg:text-xl">
+              Reward: {ethers.utils.formatEther(stateCheckClaim.amount)} MIRL
               </p>
-              <button className="mt-8 rounded-[10px] bg-[#13aa52] px-4 py-2 font-bold text-white">
+              <button className="mt-8 rounded-[10px] bg-[#13aa52] px-4 py-2 font-bold text-white"
+                disabled = {stateCheckClaim.amount === "0"}
+                onClick = {handlClaimClick} >
                 Claim Airdrop
               </button>
             </div>

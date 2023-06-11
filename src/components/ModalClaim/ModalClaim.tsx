@@ -67,17 +67,20 @@ const ModalClaim = ({ open, onClose }: Props) => {
             <p className="text-white lg:text-xl">
               Congrats! you are a Seed User.
             </p>
-            <p className="text-white lg:text-xl">
-              You will be able to claim 1000 MIRL Tokens per Month
-            </p>
-            <p className="mt-8 text-white lg:text-xl">
-              Reward: {ethers.utils.formatEther(stateCheckClaim.amount)} MIRL
-            </p>
-            <button className="mt-8 rounded-[10px] bg-[#13aa52] px-4 py-2 font-bold text-white"
-              disabled = {stateCheckClaim.amount === "0"}
-              onClick = {handlClaimClick} >
-              Claim Airdrop
-            </button>
+            {stateCheckClaim.amount === "0" ? 
+                <p className="mt-8 text-white lg:text-xl">
+                  You already claimed this month
+                </p> :
+                <div>
+                  <p className="text-white lg:text-xl">
+                    You will be able to claim 1000 MIRL Tokens per Month
+                  </p>
+                  <button className="mt-8 rounded-[10px] bg-[#13aa52] px-4 py-2 font-bold text-white"
+                    onClick = {handlClaimClick} >
+                    Claim Airdrop
+                  </button>
+                </div>
+              }
           </div>
         );
         case 'private':
@@ -97,17 +100,23 @@ const ModalClaim = ({ open, onClose }: Props) => {
               Congrats! you are a Private User.
               </p>
               <br />
-              <p className="text-white lg:text-xl">
-                You will be able to claim 2000 MIRL Tokens per Month
-              </p>
-              <p className="mt-8 text-white lg:text-xl">
-              Reward: {ethers.utils.formatEther(stateCheckClaim.amount)} MIRL
-              </p>
-              <button className="mt-8 rounded-[10px] bg-[#13aa52] px-4 py-2 font-bold text-white"
-                disabled = {stateCheckClaim.amount === "0"}
-                onClick = {handlClaimClick} >
-                Claim Airdrop
-              </button>
+              
+              
+              {stateCheckClaim.amount === "0" ? 
+                <p className="mt-8 text-white lg:text-xl">
+                  You already claimed this month
+                </p> :
+                <div>
+                  <p className="text-white lg:text-xl">
+                    You will be able to claim 2000 MIRL Tokens per Month
+                  </p>
+                  <button className="mt-8 rounded-[10px] bg-[#13aa52] px-4 py-2 font-bold text-white"
+                    onClick = {handlClaimClick} >
+                    Claim Airdrop
+                  </button>
+                </div>
+              }
+              
             </div>
           );
         case 'other':

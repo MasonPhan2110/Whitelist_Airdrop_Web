@@ -6,6 +6,8 @@ import type { AppProps } from 'next/app';
 import type { ReactElement, ReactNode } from 'react';
 
 import { getLibrary } from '@/services/web3React';
+import { store } from '@/redux/store';
+import { Provider } from 'react-redux';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -18,9 +20,11 @@ type AppPropsWithLayout = AppProps & {
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout || ((page) => page);
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
-      {getLayout(<Component {...pageProps} />)}
-    </Web3ReactProvider>
+    <Provider store={store}>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        {getLayout(<Component {...pageProps} />)}
+      </Web3ReactProvider>
+    </Provider>
   );
 };
 

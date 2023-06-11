@@ -11,7 +11,6 @@ function ReactPortal({ children }: Props) {
 
   useEffect(() => {
     setMounted(true);
-    // console.log('thangpham');
     return () => setMounted(false);
   }, []);
 

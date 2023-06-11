@@ -3,7 +3,6 @@ import Script from 'next/script';
 import AboutUsSection from '@/components/Home/AboutUsSection';
 import HeroSection from '@/components/Home/HeroSection';
 import ClaimAirdropSection from '@/components/Home/ClaimAirdropSection';
-import UpgradeTierSection from '@/components/Home/UpgradeTierSection';
 import { DefaultLayout } from '@/layouts/DefaultLayout/DefaultLayout';
 import { Meta } from '@/layouts/Meta';
 
@@ -17,7 +16,6 @@ const Index: NextPageWithLayout = () => {
       <HeroSection />
       <AboutUsSection />
       <ClaimAirdropSection />
-      <UpgradeTierSection />
 
       <noscript
         dangerouslySetInnerHTML={{

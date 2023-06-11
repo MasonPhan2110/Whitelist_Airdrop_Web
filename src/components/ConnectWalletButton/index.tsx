@@ -8,7 +8,7 @@ type Props = {
   className: string;
 };
 const ConnectWalletButton = (props: Props) => {
-  const { txt, className } = props;
+  const { className } = props;
 
   const { connectWallet, disconnectWallet } = useMetamask();
   const { account } = useWeb3React();
@@ -16,8 +16,8 @@ const ConnectWalletButton = (props: Props) => {
     account ? disconnectWallet() : connectWallet('injected');
 
   return (
-    <button className={className} onClick={handleOnClick}>
-      {txt || 'CONNECT WALLET NOW'}
+    <button className={className} onClick={handleOnClick} style={{padding:5}}>
+       {account ? "DISCONNECT WALLET" : "CONNECT WALLET NOW"}
     </button>
   );
 };

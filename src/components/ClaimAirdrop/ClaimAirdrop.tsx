@@ -1,19 +1,29 @@
 import { useWeb3React } from '@web3-react/core';
-import { useState } from 'react';
+import { useContext } from 'react';
 
 import useMetamask from '@/hooks/useMetamask';
 import { stripVal } from '@/utils/supportFunctions';
+import { CheckClaimContext } from '@/hooks/Context/CheckClaimContext';
+import { ClaimContext } from '@/hooks/Context/ClaimContext';
 
-import { claim } from "./claim";
+import ModalClaim from '../ModalClaim/ModalClaim';
+import ModalResult from '../ModalResult/ModalResult';
+
 
 const ClaimAirdrop = () => {
-  const { account, library } = useWeb3React();
+  const { account } = useWeb3React();
   const { disconnectWallet } = useMetamask();
-  const [tokenId, setTokenId] = useState<any>(0)
-  const onClaimClick = async () => {
-    await claim(tokenId, account, library)
-    setTokenId("");
-  }
+  const checkClaimContext = useContext(CheckClaimContext);
+  const claimContext = useContext(ClaimContext);
+  // const onClaimClick = async () => {
+  //   try{
+  //     await claim(tokenId, account, library)
+  //   } catch(error) {
+  //     console.log(error);
+  //   }
+    
+  //   setTokenId("");
+  // }
   return (
     <>
       <div className="mt-28 w-full lg:mt-20">
@@ -30,13 +40,9 @@ const ClaimAirdrop = () => {
         )}
        
           <div className="flex">
-          <input  value={tokenId===0?"":tokenId} onChange={(e) => {
-          setTokenId(e.target.value )
-        }
-          } placeholder= "TokenId" style={{padding:5}} className="mr-5 mt-4 w-full rounded-[10px] bg-[#3D3D3D]/[0.8] py-2  text-white lg:py-3"></input>
             <button
-              onClick={onClaimClick}
-              disabled={!account || tokenId===0}
+              onClick={()=>checkClaimContext?.handleCheckClaim()}
+              disabled={!account}
               className="mr-5 mt-4 w-full rounded-[10px] bg-[#3D3D3D]/[0.8] py-2 font-Inter font-bold text-white lg:py-3"
             >
               Claim Now
@@ -44,6 +50,24 @@ const ClaimAirdrop = () => {
 
           </div>
       </div>
+      <ModalResult
+        open={claimContext?.stateClaim.isOpenModal}
+        onClose={() => {
+          claimContext.setStateClaim((prev) => ({
+            ...prev,
+            isOpenModal: false,
+          }));
+        }}
+      />
+      <ModalClaim
+        open={checkClaimContext?.stateCheckClaim.isOpenModal}
+        onClose={() => {
+          checkClaimContext.setStateCheckClaim((prev) => ({
+            ...prev,
+            isOpenModal: false,
+          }));
+        }}
+      />
     </>
   );
 };

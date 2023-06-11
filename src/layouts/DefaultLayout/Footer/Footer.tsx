@@ -10,7 +10,7 @@ const Footer = () => {
       /> */}
       <div className="relative  bg-[#600000] py-8">
         <p className="text-center text-sm text-white">
-          © 2023 VIKOIOSOFT Interview
+          © 2023 DAYONE Interview
         </p>
       </div>
     </footer>

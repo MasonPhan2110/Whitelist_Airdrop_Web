@@ -1,11 +1,14 @@
 import { SECTION_ID } from '@/constants/common';
 
+import { CheckClaimContextProvider } from '@/hooks/Context/CheckClaimContext';
+import { ClaimContextProvider } from '@/hooks/Context/ClaimContext';
 import ClaimAirdrop from '../ClaimAirdrop/ClaimAirdrop';
 
 const ClaimAirdropSection = () => {
 
   return (
-    <>
+    <CheckClaimContextProvider>
+      <ClaimContextProvider>
       <section
         id={SECTION_ID.CLAIM}
         className="relative h-full bg-cover  bg-no-repeat py-28"
@@ -30,7 +33,8 @@ const ClaimAirdropSection = () => {
           
         </div>
       </section>
-    </>
+      </ClaimContextProvider>
+    </CheckClaimContextProvider>
   );
 };
 

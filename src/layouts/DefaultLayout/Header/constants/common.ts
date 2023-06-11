@@ -9,8 +9,4 @@ export const LIST_NAV = [
     label: 'Claim Airdrop',
     href: SECTION_ID.CLAIM,
   },
-  {
-    label: 'Upgrade Tier',
-    href: SECTION_ID.UPGRADE,
-  },
 ];

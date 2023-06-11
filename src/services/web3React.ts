@@ -9,7 +9,7 @@ const POLLING_INTERVAL = 12000;
 export const CHAIN_ID = Number(process.env.NEXT_PUBLIC_CHAIN_ID);
 export type ConnectorNames = 'injected';
 
-const injected = new InjectedConnector({ supportedChainIds: [CHAIN_ID, 97] });
+const injected = new InjectedConnector({ supportedChainIds: [CHAIN_ID] });
 
 export const getLibrary = (provider: any): ethers.providers.Web3Provider => {
   const library = new ethers.providers.Web3Provider(provider);

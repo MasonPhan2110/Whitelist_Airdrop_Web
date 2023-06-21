@@ -6,6 +6,10 @@ export const LIST_NAV = [
     href: SECTION_ID.ABOUT,
   },
   {
+    label: 'Check',
+    href: SECTION_ID.CHECK,
+  },
+  {
     label: 'Claim Airdrop',
     href: SECTION_ID.CLAIM,
   },

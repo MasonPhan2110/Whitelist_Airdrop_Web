@@ -6,6 +6,7 @@ import ClaimAirdropSection from '@/components/Home/ClaimAirdropSection';
 import { DefaultLayout } from '@/layouts/DefaultLayout/DefaultLayout';
 import { Meta } from '@/layouts/Meta';
 
+import CheckClaimSection from '@/components/Home/CheckClaimSection';
 import type { NextPageWithLayout } from './_app';
 
 const Index: NextPageWithLayout = () => {
@@ -15,6 +16,7 @@ const Index: NextPageWithLayout = () => {
     <>
       <HeroSection />
       <AboutUsSection />
+      <CheckClaimSection />
       <ClaimAirdropSection />
 
       <noscript

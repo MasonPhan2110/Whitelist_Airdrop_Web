@@ -1,26 +1,21 @@
 import React, { useContext } from 'react';
 
-import { CheckClaimContext, ClaimModalType } from '@/hooks/Context/CheckClaimContext';
+import { CheckContext } from '@/hooks/Context/CheckContext';
 import { useWeb3React } from '@web3-react/core';
-import { ClaimContext } from '@/hooks/Context/ClaimContext';
-import { createDataClaim } from '@/firebase/UpdateDB';
 import { ethers } from 'ethers';
-import { useSelector } from 'react-redux';
 import ReactPortal from '../Portal/Portal';
-import { selectType } from '../../redux/store'
 
 
 type Props = {
   open: boolean | undefined;
   onClose: () => void;
+  address: string
 };
 
-const ModalClaim = ({ open, onClose }: Props) => {
-  const type = useSelector(selectType)
-  const { stateCheckClaim, setStateCheckClaim } = useContext(CheckClaimContext);
+const ModalCheck = ({ open, onClose, address }: Props) => {
+  const { stateCheck } = useContext(CheckContext);
   const { account } = useWeb3React();
-  const { modalType } = stateCheckClaim;
-  const claimContext = useContext(ClaimContext);
+  const { modalType } = stateCheck;
   const handleParentClick = (event: any) => {
     event.preventDefault();
     onClose();
@@ -29,19 +24,6 @@ const ModalClaim = ({ open, onClose }: Props) => {
   const handleChildClick = (event: any) => {
     event.stopPropagation();
   };
-  const handlClaimClick = async () => {
-    setStateCheckClaim((prev) => ({
-      ...prev,
-      isOpenModal: false,
-      modalType: ClaimModalType.LOADING,
-      imageURL: '',
-    }));
-
-    const amountNumber = Number(ethers.utils.formatEther(stateCheckClaim.amount))
-    const id = await createDataClaim(account!,amountNumber)
-    
-    claimContext?.handleClaim(type === 'seed' ? 0 : 1, id,stateCheckClaim.amount);
-  }
 
   const render = () => {
     switch (modalType) {
@@ -55,30 +37,26 @@ const ModalClaim = ({ open, onClose }: Props) => {
         return (
           <div className="modal " onClick={handleChildClick} style={{backgroundColor:'rgb(0,0,50)', padding: 50}}>
             <div className="min-h-[300px]">
-              <img style={{height:300, width:300, display:'revert'}} src={stateCheckClaim.imageURL || ''} alt="" />
+              <img style={{height:300, width:300, display:'revert'}} src={stateCheck.imageURL || ''} alt="" />
             </div>
             <p className="mt-8 font-extrabold text-white lg:text-4xl">
               ELIGIBLE WALLET
             </p>
             <br />
             <p className="my-8 text-white lg:text-base">
-              {account}
+              {address}
             </p>
             <p className="text-white lg:text-xl">
-              Congrats! you are a Seed User.
+              This is a Seed User.
             </p>
-            {stateCheckClaim.amount === "0" ? 
+            {stateCheck.amount === "0" ? 
                 <p className="mt-8 text-white lg:text-xl">
-                  You already claim in this month
+                  This wallet already claimed this month
                 </p> :
                 <div>
                   <p className="text-white lg:text-xl">
-                    You will be able to claim 1000 MIRL Tokens per Month
+                  This wallet will be able to claim {Number(ethers.utils.formatEther(stateCheck.amount))} tokens
                   </p>
-                  <button className="mt-8 rounded-[10px] bg-[#13aa52] px-4 py-2 font-bold text-white"
-                    onClick = {handlClaimClick} >
-                    Claim Airdrop
-                  </button>
                 </div>
               }
           </div>
@@ -87,33 +65,29 @@ const ModalClaim = ({ open, onClose }: Props) => {
           return(
             <div className="modal " onClick={handleChildClick} style={{backgroundColor:'rgb(0,0,50)', padding: 50}}>
               <div className="min-h-[342px]">
-                <img style={{height:300, width:300, display:'revert'}}src={stateCheckClaim.imageURL || ''} alt="" />
+                <img style={{height:300, width:300, display:'revert'}}src={stateCheck.imageURL || ''} alt="" />
               </div>
               <p className="mt-8 font-extrabold text-white lg:text-4xl">
               ELIGIBLE WALLET
               </p>
               <br />
               <p className="my-8 text-white lg:text-base">
-                {account}
+                {address}
               </p>
               <p className="text-white lg:text-xl">
-              Congrats! you are a Private User.
+              This is a Private User.
               </p>
               <br />
               
               
-              {stateCheckClaim.amount === "0" ? 
+              {stateCheck.amount === "0" ? 
                 <p className="mt-8 text-white lg:text-xl">
-                  You already claim in this month
+                   This wallet already claimed this month
                 </p> :
                 <div>
                   <p className="text-white lg:text-xl">
-                    You will be able to claim 2000 MIRL Tokens per Month
+                  This wallet will be able to claim {stateCheck.amount}
                   </p>
-                  <button className="mt-8 rounded-[10px] bg-[#13aa52] px-4 py-2 font-bold text-white"
-                    onClick = {handlClaimClick} >
-                    Claim Airdrop
-                  </button>
                 </div>
               }
               
@@ -123,7 +97,7 @@ const ModalClaim = ({ open, onClose }: Props) => {
           return(
               <div className="modal " onClick={handleChildClick} style={{backgroundColor:'rgb(0,0,50)', padding: 50}}>
                 <div className="min-h-[342px]">
-                  <img style={{height:300, width:300, display:'revert'}}src={stateCheckClaim.imageURL || ''} alt="" />
+                  <img style={{height:300, width:300, display:'revert'}}src={stateCheck.imageURL || ''} alt="" />
                 </div>
                 <p className="mt-8 font-extrabold text-white lg:text-4xl">
                   INELIGIBLE WALLET
@@ -159,4 +133,4 @@ const ModalClaim = ({ open, onClose }: Props) => {
   );
 };
 
-export default ModalClaim;
+export default ModalCheck;
